@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Auxiliary from '../../hoc/Auxiliary';
 import Burger from '../../components/Burger/Burger';
-import BurgerControls from '../../components/Burger/BuildControls/BuildControls';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
@@ -11,12 +11,12 @@ const INGREDIENT_PRICES = {
     cheese: 0.4,
     meat: 1.3,
     bacon: 0.7
-}
+};
 
 class BurgerBuilder extends Component {
 
     // constructor(props){
-    //     super(prop);
+    //     super(props);
     //     this.state = {...}
     // }
 
@@ -28,7 +28,7 @@ class BurgerBuilder extends Component {
             meat: 0
         },
         totalPrice: 4,
-        puchaseable: false,
+        purchasable: false,
         purchasing: false
     }
 
@@ -37,29 +37,29 @@ class BurgerBuilder extends Component {
         //     ...this.state.ingredients
         // };
         const sum = Object.keys(ingredients)
-                .map(igkey => {
-                    return ingredients[igkey]
+                .map( igKey => {
+                    return ingredients[igKey];
                 })
                 .reduce( (sum,el) => {
                     return sum + el;
                 },0);
-        this.setState({puchaseable : sum > 0});
+        this.setState({purchasable : sum > 0});
     }
 
     addIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
-        const updateCounted = oldCount + 1;
-        const updateIngredients = {
+        const updatedCount = oldCount + 1;
+        const updatedIngredients = {
             ...this.state.ingredients 
         };
 
-        updateIngredients[type] =  updateCounted;
+        updatedIngredients[type] =  updatedCount;
         const priceAddition = INGREDIENT_PRICES[type];
         const oldPrice = this.state.totalPrice;
-        const newPrince = oldPrice + priceAddition;
+        const newPrice = oldPrice + priceAddition;
 
-        this.setState({totalPrice: newPrince, ingredients: updateIngredients});
-        this.updatePurchaseState(updateIngredients);
+        this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
+        this.updatePurchaseState(updatedIngredients);
     }
 
     removeIngredientHandler = (type) => {
@@ -67,30 +67,30 @@ class BurgerBuilder extends Component {
         if (oldCount <= 0){
             return;
         }
-        const updateCounted = oldCount - 1;
-        const updateIngredients = {
+        const updatedCount = oldCount - 1;
+        const updatedIngredients = {
             ...this.state.ingredients 
         };
 
-        updateIngredients[type] =  updateCounted;
+        updatedIngredients[type] =  updatedCount;
         const priceDeduction = INGREDIENT_PRICES[type];
         const oldPrice = this.state.totalPrice;
-        const newPrince = oldPrice - priceDeduction;
+        const newPrice = oldPrice - priceDeduction;
 
-        this.setState({totalPrice: newPrince, ingredients: updateIngredients});
-        this.updatePurchaseState(updateIngredients);
+        this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
+        this.updatePurchaseState(updatedIngredients);
     }
 
-    puchaseHandler = () => {
+    purchaseHandler = () => {
         this.setState({purchasing: true});
     }
 
-    puchaseCancelHandler = () => {
+    purchaseCancelHandler = () => {
         this.setState({purchasing: false});
     }
 
-    puchaseContinueHandler = () => {
-        alert('You Continue')
+    purchaseContinueHandler = () => {
+        alert('You continue!');
     }
 
     render() {
@@ -104,20 +104,20 @@ class BurgerBuilder extends Component {
         //{salad: true, meat: false, ...}
         return (
             <Auxiliary>
-                <Modal show={this.state.purchasing} modalClosed={this.puchaseCancelHandler}>
+                <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
                     <OrderSummary 
                         ingredients={this.state.ingredients}
                         price={this.state.totalPrice}
-                        puchaseCancelled={this.puchaseCancelHandler}
-                        puchaseContinued={this.puchaseContinueHandler}></OrderSummary>
+                        purchaseCancelled={this.purchaseCancelHandler}
+                        purchaseContinued={this.purchaseContinueHandler}/>
                 </Modal>
                 <Burger ingredients={this.state.ingredients}/>
-                <BurgerControls 
+                <BuildControls 
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
                     disabled={disabledInfo}
-                    puchaseable={this.state.puchaseable}
-                    ordered={this.puchaseHandler}
+                    purchasable={this.state.purchasable}
+                    ordered={this.purchaseHandler}
                     price={this.state.totalPrice}/>
             </Auxiliary>
         );
