@@ -4,7 +4,6 @@ import classes from './Modal.css';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import Backdrop from '../Backdrop/Backdrop';
 
-// const modal = (props) => (
 class Modal extends Component {
 
 
@@ -12,7 +11,7 @@ class Modal extends Component {
         return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
     }
 
-    componentDidUpdate(){
+    componentWillUpdate (){
         console.log('[Modal] WillUpdate');
     }
 

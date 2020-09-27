@@ -13,33 +13,13 @@ class App extends Component {
         <Layout>
           <Switch>
             <Route path="/checkout" component={Checkout}/>
-            <Route path="/orders" exact component={Orders}/>
+            <Route path="/orders" component={Orders}/>
             <Route path="/" exact component={BurgerBuilder}/>
           </Switch>
         </Layout>
       </div>
     );
   }
-
-  // state = {
-  //   show: true
-  // };
-
-  // componentDidMount() {
-  //   setTimeout(() => {
-  //     this.setState({show: false});
-  //   },5000);
-  // }
-
-  // render() {
-  //   return (
-  //     <div>
-  //       <Layout>
-  //         {this.state.show ? <BurgerBuilder /> : null} 
-  //       </Layout>
-  //     </div>
-  //   );
-  // }
 }
 
 export default App;

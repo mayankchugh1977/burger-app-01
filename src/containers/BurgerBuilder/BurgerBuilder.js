@@ -42,9 +42,6 @@ class BurgerBuilder extends Component {
     }
 
     updatePurchaseState (ingredients) {
-        // const ingredients = {
-        //     ...this.state.ingredients
-        // };
         const sum = Object.keys(ingredients)
                 .map( igKey => {
                     return ingredients[igKey];
@@ -96,39 +93,13 @@ class BurgerBuilder extends Component {
 
     purchaseContinueHandler = () => {
         // alert('You continue!');
-        // this.setState({loading: true});
-        // const order = {
-        //     ingredients: this.state.ingredients,
-        //     price: this.state.totalPrice,
-        //     customer: {
-        //         name: 'Chota Baby',
-        //         address: {
-        //                 street: 'Chota Baby Street',
-        //                 zipCode: '0000',
-        //                 country: 'Hong Kong'
-        //             },
-        //             email: 'chotababy@chotababy.com'
-        //         },
-        //         deliveryMethod: 'fastest'
-        // }
-        // axios.post('/orders.json',order)
-        //     .then(response => {
-        //         this.setState({loading: false, purchasing: false});
-        //         console.log(response);
-        //     })
-        //     .catch(error => {
-        //         this.setState({loading: false, purchasing: false});
-        //         console.log(error);
-        //     });
-
+        
         const queryParams= [];
-
         for(let i in this.state.ingredients){
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
         }
         queryParams.push('price='+this.state.totalPrice);
         const queryString = queryParams.join('&');
-
         this.props.history.push({
             pathname: '/checkout',
             search: '?' + queryString 
@@ -139,12 +110,10 @@ class BurgerBuilder extends Component {
         const disabledInfo = {
             ...this.state.ingredients
         };
-
         for(let key in disabledInfo){
             disabledInfo[key] = disabledInfo[key]  <= 0
         }
         let orderSummary = null;
-       
         let burger = this.state.error ? <p> Ingredients can't be loaded! </p> : <Spinner/>;
 
         if(this.state.ingredients) {
@@ -167,7 +136,6 @@ class BurgerBuilder extends Component {
                 purchaseCancelled={this.purchaseCancelHandler}
                 purchaseContinued={this.purchaseContinueHandler}/>;
         }
-
         if(this.state.loading) {
             orderSummary = <Spinner/>;
         }
